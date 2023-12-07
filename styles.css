@@ -1,0 +1,25 @@
+.imagen-container {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+#imagenAleatoria {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form-control {
+    min-height: 3.125rem;
+    line-height: initial;
+    font-size: medium;
+} 
+
+.btn {
+    min-height: 3.125rem;
+    font-weight: 700;
+} 
+
