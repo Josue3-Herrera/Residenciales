@@ -84,7 +84,7 @@ if ($rol != 2) {
 
       <li>
         <a href="proveedores.php">
-        <i class='bx bx-group' ></i>
+          <i class='bx bx-group'></i>
           <span class="link_name">Proveedores</span>
         </a>
         <ul class="sub-menu blank">
@@ -94,7 +94,7 @@ if ($rol != 2) {
 
       <li>
         <a href="avisos.php">
-        <i class='bx bx-bell' ></i>
+          <i class='bx bx-bell'></i>
           <span class="link_name">Avisos</span>
         </a>
         <ul class="sub-menu blank">
@@ -102,7 +102,7 @@ if ($rol != 2) {
         </ul>
       </li>
 
-    <!-- Usuario Admin -->
+      <!-- Usuario Admin -->
       <li>
         <div class="profile-details">
           <div class="profile-content">
@@ -125,57 +125,57 @@ if ($rol != 2) {
   <section class="home-section">
 
 
-  <div class="home-content mx-2">
-    <i class='bx bx-menu'></i>
-    <span class="fw-bold fs-4">
-        <span id="saludo" style="color: #107FA3;" class="text-capitalize"></span> 
-    </span>
-  </div>
+    <div class="home-content mx-2">
+      <i class='bx bx-menu'></i>
+      <span class="fw-bold fs-4">
+        <span id="saludo" style="color: #107FA3;" class="text-capitalize"></span>
+      </span>
+    </div>
 
 
     <!-- CARDS   -->
     <div class="container mt-4">
-      
+
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-        
+
         <!-- Residentes sin atrasos -->
         <div class="col mb-4">
           <div class="card mx-auto shadow" style="max-width: 18rem;">
-              <div class="card-body text-center">
-                  <h5 class="card-title d-flex justify-content-center align-items-center fw-bold">
-                  <i class='bx bx-user' style='font-size: 50px; color:#157ce3'></i>
-                      <span class="ms-3 text-start ">Usuarios registrados</span>
-                  </h5>
-                  <span class="fw-bolder fs-5 text-start" style="color: #1062B3;">
-                  <?php
-include 'conexion.php';
+            <div class="card-body text-center">
+              <h5 class="card-title d-flex justify-content-center align-items-center fw-bold">
+                <i class='bx bx-user' style='font-size: 50px; color:#157ce3'></i>
+                <span class="ms-3 text-start ">Usuarios registrados</span>
+              </h5>
+              <span class="fw-bolder fs-5 text-start" style="color: #1062B3;">
+                <?php
+                include 'conexion.php';
 
-// Consulta SQL para obtener la suma de usuarios con rol 2
-$sql = "SELECT COUNT(*) AS totalUsuarios FROM t_usuarios WHERE rol = 1";
-$result = $conn->query($sql);
+                // Consulta SQL para obtener la suma de usuarios con rol 2
+                $sql = "SELECT COUNT(*) AS totalUsuarios FROM t_usuarios WHERE rol = 1";
+                $result = $conn->query($sql);
 
-// Verificar si la consulta fue exitosa
-if ($result) {
-    // Obtener el resultado como un arreglo asociativo
-    $row = $result->fetch_assoc();
+                // Verificar si la consulta fue exitosa
+                if ($result) {
+                  // Obtener el resultado como un arreglo asociativo
+                  $row = $result->fetch_assoc();
 
-    // Obtener la suma de usuarios con rol 2
-    $totalUsuarios = $row['totalUsuarios'];
+                  // Obtener la suma de usuarios con rol 2
+                  $totalUsuarios = $row['totalUsuarios'];
 
-    // Mostrar la suma
-    echo "$totalUsuarios" ;
-} else {
-    // Mostrar un mensaje de error si la consulta falla
-    echo "Error en la consulta: " . $conn->error;
-}
+                  // Mostrar la suma
+                  echo "$totalUsuarios";
+                } else {
+                  // Mostrar un mensaje de error si la consulta falla
+                  echo "Error en la consulta: " . $conn->error;
+                }
 
-// Cerrar la conexión a la base de datos
-$conn->close();
-?>
+                // Cerrar la conexión a la base de datos
+                $conn->close();
+                ?>
 
-                
-                </span>
-              </div>
+
+              </span>
+            </div>
           </div>
         </div>
 
@@ -183,43 +183,43 @@ $conn->close();
         <!-- Usuarios con atrasos -->
         <div class="col mb-4">
           <div class="card mx-auto shadow" style="max-width: 18rem;">
-              <div class="card-body text-center">
-                  <h5 class="card-title d-flex justify-content-center align-items-center fw-bold">
-                    <i class='bx bx-alarm-exclamation' style='color:#831fa5; font-size: 50px;'></i>
-                    <span class="ms-3 text-start ">Avisos importantes</span>
-                  </h5>
-                  <span class="fw-bolder fs-5 text-start" style="color: #5E1079;">
-                
-                  <?php
-include 'conexion.php';
+            <div class="card-body text-center">
+              <h5 class="card-title d-flex justify-content-center align-items-center fw-bold">
+                <i class='bx bx-alarm-exclamation' style='color:#831fa5; font-size: 50px;'></i>
+                <span class="ms-3 text-start ">Avisos importantes</span>
+              </h5>
+              <span class="fw-bolder fs-5 text-start" style="color: #5E1079;">
 
-// Consulta SQL para obtener la suma de registros con importancia 'Alta'
-$sql = "SELECT SUM(importancia='Alta') AS totalAvisosAltos FROM t_avisos";
-$result = $conn->query($sql);
+                <?php
+                include 'conexion.php';
 
-// Verificar si la consulta fue exitosa
-if ($result) {
-    // Obtener el resultado como un arreglo asociativo
-    $row = $result->fetch_assoc();
+                // Consulta SQL para obtener la suma de registros con importancia 'Alta'
+                $sql = "SELECT SUM(importancia='Alta') AS totalAvisosAltos FROM t_avisos";
+                $result = $conn->query($sql);
 
-    // Obtener la suma de avisos con importancia 'Alta'
-    $totalAvisosAltos = $row['totalAvisosAltos'];
+                // Verificar si la consulta fue exitosa
+                if ($result) {
+                  // Obtener el resultado como un arreglo asociativo
+                  $row = $result->fetch_assoc();
 
-    // Mostrar la suma
-    echo $totalAvisosAltos;
-} else {
-    // Mostrar un mensaje de error si la consulta falla
-    echo "Error en la consulta: " . $conn->error;
-}
+                  // Obtener la suma de avisos con importancia 'Alta'
+                  $totalAvisosAltos = $row['totalAvisosAltos'];
 
-// Cerrar la conexión a la base de datos
-$conn->close();
-?>
+                  // Mostrar la suma
+                  echo $totalAvisosAltos;
+                } else {
+                  // Mostrar un mensaje de error si la consulta falla
+                  echo "Error en la consulta: " . $conn->error;
+                }
 
-                
-                
-                </span>
-              </div>
+                // Cerrar la conexión a la base de datos
+                $conn->close();
+                ?>
+
+
+
+              </span>
+            </div>
           </div>
         </div>
 
@@ -227,42 +227,42 @@ $conn->close();
         <!-- Dinero recaudado -->
         <div class="col mb-4">
           <div class="card mx-auto shadow" style="max-width: 18rem;">
-              <div class="card-body text-center">
-                  <h5 class="card-title d-flex justify-content-center align-items-center fw-bold">
-                  <i class='bx bx-money' style='color:#0f9f53; font-size: 50px;'></i>
-                    <span class="ms-3 text-start ">Dinero recaudado</span>
-                  </h5>
-                  <span class="fw-bolder fs-5 text-start" style="color: #008740;">
-                
-                  <?php
-include 'conexion.php';
+            <div class="card-body text-center">
+              <h5 class="card-title d-flex justify-content-center align-items-center fw-bold">
+                <i class='bx bx-money' style='color:#0f9f53; font-size: 50px;'></i>
+                <span class="ms-3 text-start ">Dinero recaudado</span>
+              </h5>
+              <span class="fw-bolder fs-5 text-start" style="color: #008740;">
 
-// Consulta SQL para obtener la suma de la columna 'monto_pagado'
-$sql = "SELECT SUM(monto_pagado) AS totalPagado FROM t_pagos";
-$result = $conn->query($sql);
+                <?php
+                include 'conexion.php';
 
-// Verificar si la consulta fue exitosa
-if ($result) {
-    // Obtener el resultado como un arreglo asociativo
-    $row = $result->fetch_assoc();
+                // Consulta SQL para obtener la suma de la columna 'monto_pagado'
+                $sql = "SELECT SUM(monto_pagado) AS totalPagado FROM t_pagos";
+                $result = $conn->query($sql);
 
-    // Obtener la suma total de dinero pagado
-    $totalPagado = $row['totalPagado'];
+                // Verificar si la consulta fue exitosa
+                if ($result) {
+                  // Obtener el resultado como un arreglo asociativo
+                  $row = $result->fetch_assoc();
 
-    // Mostrar la suma total
-    echo "$" .number_format($totalPagado, 2);
-} else {
-    // Mostrar un mensaje de error si la consulta falla
-    echo "Error en la consulta: " . $conn->error;
-}
+                  // Obtener la suma total de dinero pagado
+                  $totalPagado = $row['totalPagado'];
 
-// Cerrar la conexión a la base de datos
-$conn->close();
-?>
+                  // Mostrar la suma total
+                  echo "$" . number_format($totalPagado, 2);
+                } else {
+                  // Mostrar un mensaje de error si la consulta falla
+                  echo "Error en la consulta: " . $conn->error;
+                }
 
-                
-                </span>
-              </div>
+                // Cerrar la conexión a la base de datos
+                $conn->close();
+                ?>
+
+
+              </span>
+            </div>
           </div>
         </div>
 
@@ -286,27 +286,27 @@ $conn->close();
         </div>
 
         </div> -->
-    </div>
-
-    <div class="container mt-4">
-      
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-        
       </div>
-    </div>
 
-    <div class="container mt-5">
-    <h2>Tabla de Pagos</h2>
-    <table class="table table-bordered">
-        <thead>
+      <div class="container mt-4">
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+
+        </div>
+      </div>
+
+      <div class="container mt-5">
+        <h2>Tabla de Pagos</h2>
+        <table class="table table-bordered">
+          <thead>
             <tr>
-                <th>Nombre del Gasto</th>
-                <th>Nombre de Usuario</th>
-                <th>Fecha de Pago</th>
-                <!-- Agrega más encabezados según la estructura de tu tabla t_pagos -->
+              <th>Nombre del Gasto</th>
+              <th>Nombre de Usuario</th>
+              <th>Fecha de Pago</th>
+              <!-- Agrega más encabezados según la estructura de tu tabla t_pagos -->
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <?php
             $auth = new auth();
             $idUsuario = $auth->obtenerIdUsuario($_SESSION['usuario']);
@@ -321,74 +321,74 @@ $conn->close();
 
             // Mostrar los resultados de la consulta en la tabla
             if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $row["nombre_gasto"] . "</td>";
-                    echo "<td>" . $row["usuario"] . "</td>";
-                    echo "<td>" . $row["fecha_pago"] . "</td>";
-                    // Agrega más celdas según la estructura de tu tabla t_pagos
-                    echo "</tr>";
-                }
+              while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row["nombre_gasto"] . "</td>";
+                echo "<td>" . $row["usuario"] . "</td>";
+                echo "<td>" . $row["fecha_pago"] . "</td>";
+                // Agrega más celdas según la estructura de tu tabla t_pagos
+                echo "</tr>";
+              }
             } else {
-                echo "<tr><td colspan='3'>No hay pagos registrados.</td></tr>";
+              echo "<tr><td colspan='3'>No hay pagos registrados.</td></tr>";
             }
             ?>
-        </tbody>
-    </table>
-</div>
+          </tbody>
+        </table>
+      </div>
 
 
 
-    
+
 
   </section>
 
 
   <script>
-   // Obtener la hora actual
-let hora = new Date().getHours();
-let saludo = "";
+    // Obtener la hora actual
+    let hora = new Date().getHours();
+    let saludo = "";
 
-let xhr = new XMLHttpRequest();
-xhr.open('GET', 'nombre.php', true);
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'nombre.php', true);
 
-xhr.onload = function() {
-  if (xhr.status === 200) {
-    let usuario = xhr.responseText;
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        let usuario = xhr.responseText;
 
-    if (hora >= 6 && hora < 12) {
-        saludo = "Buenos días " + usuario + " 🌅";
-    } else if (hora >= 12 && hora < 18) {
-      saludo = "Buenas tardes " + usuario +" 🌇";
-    } else {
-        saludo = "Buenas noches " + usuario +" 🌔";
+        if (hora >= 6 && hora < 12) {
+          saludo = "Buenos días " + usuario + " 🌅";
+        } else if (hora >= 12 && hora < 18) {
+          saludo = "Buenas tardes " + usuario + " 🌇";
+        } else {
+          saludo = "Buenas noches " + usuario + " 🌔";
+        }
+
+        // Actualizar el texto del saludo en el elemento con ID "saludo"
+        document.getElementById("saludo").textContent = saludo;
+      }
+    };
+
+    xhr.send();
+
+
+
+    // * ---------------------------------------------------- *
+
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+      arrow[i].addEventListener("click", (e) => {
+        let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+        arrowParent.classList.toggle("showMenu");
+      });
     }
-
-    // Actualizar el texto del saludo en el elemento con ID "saludo"
-    document.getElementById("saludo").textContent = saludo;
-  }
-};
-
-xhr.send();
-
-
-
-// * ---------------------------------------------------- *
-
-let arrow = document.querySelectorAll(".arrow");
-for (var i = 0; i < arrow.length; i++) {
-  arrow[i].addEventListener("click", (e) => {
-    let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
-    arrowParent.classList.toggle("showMenu");
-  });
-}
-let sidebar = document.querySelector(".sidebar");
-let sidebarBtn = document.querySelector(".bx-menu");
-console.log(sidebarBtn);
-sidebarBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("close");
-});
-</script>
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    console.log(sidebarBtn);
+    sidebarBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    });
+  </script>
 
   <script src="../../assets/js/bootstrap.bundle.min.js"></script>
 
