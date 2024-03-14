@@ -46,7 +46,7 @@ if ($rol != 2) {
 
         <a href="#">
           <i class='bx bx-grid-alt'></i>
-          <span class="link_name">Inicio</span>
+          <span class="link_name">Inicio :D</span>
         </a>
 
         <ul class="sub-menu blank">
@@ -82,6 +82,15 @@ if ($rol != 2) {
         </ul>
       </li>
 
+      <li>
+        <a href="proveedores.php">
+        <i class='bx bx-group' ></i>
+          <span class="link_name">Proveedores</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="proveedores.php">Proveedores 👷</a></li>
+        </ul>
+      </li>
 
       <li>
         <a href="avisos.php">
@@ -114,7 +123,8 @@ if ($rol != 2) {
 
   <!-- Sección dentro del Dashboard -->
   <section class="home-section">
-    
+
+
   <div class="home-content mx-2">
     <i class='bx bx-menu'></i>
     <span class="fw-bold fs-4">
@@ -134,9 +144,37 @@ if ($rol != 2) {
               <div class="card-body text-center">
                   <h5 class="card-title d-flex justify-content-center align-items-center fw-bold">
                   <i class='bx bx-user' style='font-size: 50px; color:#157ce3'></i>
-                      <span class="ms-3 text-start ">Usuarios sin retrasos</span>
+                      <span class="ms-3 text-start ">Usuarios registrados</span>
                   </h5>
-                  <span class="fw-bolder fs-5 text-start" style="color: #1062B3;">19 Residentes</span>
+                  <span class="fw-bolder fs-5 text-start" style="color: #1062B3;">
+                  <?php
+include 'conexion.php';
+
+// Consulta SQL para obtener la suma de usuarios con rol 2
+$sql = "SELECT COUNT(*) AS totalUsuarios FROM t_usuarios WHERE rol = 1";
+$result = $conn->query($sql);
+
+// Verificar si la consulta fue exitosa
+if ($result) {
+    // Obtener el resultado como un arreglo asociativo
+    $row = $result->fetch_assoc();
+
+    // Obtener la suma de usuarios con rol 2
+    $totalUsuarios = $row['totalUsuarios'];
+
+    // Mostrar la suma
+    echo "$totalUsuarios" ;
+} else {
+    // Mostrar un mensaje de error si la consulta falla
+    echo "Error en la consulta: " . $conn->error;
+}
+
+// Cerrar la conexión a la base de datos
+$conn->close();
+?>
+
+                
+                </span>
               </div>
           </div>
         </div>
@@ -148,9 +186,39 @@ if ($rol != 2) {
               <div class="card-body text-center">
                   <h5 class="card-title d-flex justify-content-center align-items-center fw-bold">
                     <i class='bx bx-alarm-exclamation' style='color:#831fa5; font-size: 50px;'></i>
-                    <span class="ms-3 text-start ">Usuarios con retrasos</span>
+                    <span class="ms-3 text-start ">Avisos importantes</span>
                   </h5>
-                  <span class="fw-bolder fs-5 text-start" style="color: #5E1079;">10 Residentes</span>
+                  <span class="fw-bolder fs-5 text-start" style="color: #5E1079;">
+                
+                  <?php
+include 'conexion.php';
+
+// Consulta SQL para obtener la suma de registros con importancia 'Alta'
+$sql = "SELECT SUM(importancia='Alta') AS totalAvisosAltos FROM t_avisos";
+$result = $conn->query($sql);
+
+// Verificar si la consulta fue exitosa
+if ($result) {
+    // Obtener el resultado como un arreglo asociativo
+    $row = $result->fetch_assoc();
+
+    // Obtener la suma de avisos con importancia 'Alta'
+    $totalAvisosAltos = $row['totalAvisosAltos'];
+
+    // Mostrar la suma
+    echo $totalAvisosAltos;
+} else {
+    // Mostrar un mensaje de error si la consulta falla
+    echo "Error en la consulta: " . $conn->error;
+}
+
+// Cerrar la conexión a la base de datos
+$conn->close();
+?>
+
+                
+                
+                </span>
               </div>
           </div>
         </div>
@@ -164,26 +232,60 @@ if ($rol != 2) {
                   <i class='bx bx-money' style='color:#0f9f53; font-size: 50px;'></i>
                     <span class="ms-3 text-start ">Dinero recaudado</span>
                   </h5>
-                  <span class="fw-bolder fs-5 text-start" style="color: #008740;">$ 15,500.00</span>
+                  <span class="fw-bolder fs-5 text-start" style="color: #008740;">
+                
+                  <?php
+include 'conexion.php';
+
+// Consulta SQL para obtener la suma de la columna 'monto_pagado'
+$sql = "SELECT SUM(monto_pagado) AS totalPagado FROM t_pagos";
+$result = $conn->query($sql);
+
+// Verificar si la consulta fue exitosa
+if ($result) {
+    // Obtener el resultado como un arreglo asociativo
+    $row = $result->fetch_assoc();
+
+    // Obtener la suma total de dinero pagado
+    $totalPagado = $row['totalPagado'];
+
+    // Mostrar la suma total
+    echo "$" .number_format($totalPagado, 2);
+} else {
+    // Mostrar un mensaje de error si la consulta falla
+    echo "Error en la consulta: " . $conn->error;
+}
+
+// Cerrar la conexión a la base de datos
+$conn->close();
+?>
+
+                
+                </span>
               </div>
           </div>
         </div>
 
 
         <!-- Dinero restante -->
-        <div class="col mb-4">
+        <!-- <div class="col mb-4">
           <div class="card mx-auto shadow" style="max-width: 18rem;">
               <div class="card-body text-center">
                   <h5 class="card-title d-flex justify-content-center align-items-center fw-bold">
                   <i class='bx bx-line-chart-down' style='color:#9a0919; font-size: 50px;'></i>
                     <span class="ms-3 text-start ">Dinero restante</span>
                   </h5>
-                  <span class="fw-bolder fs-5 text-start" style="color: #6A0A15;">$ 7,810.50</span>
+                  <span class="fw-bolder fs-5 text-start" style="color: #6A0A15;">
+                
+               
+
+                
+                </span>
               </div>
           </div>
         </div>
 
-        </div>
+        </div> -->
     </div>
 
     <div class="container mt-4">
@@ -192,6 +294,49 @@ if ($rol != 2) {
         
       </div>
     </div>
+
+    <div class="container mt-5">
+    <h2>Tabla de Pagos</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre del Gasto</th>
+                <th>Nombre de Usuario</th>
+                <th>Fecha de Pago</th>
+                <!-- Agrega más encabezados según la estructura de tu tabla t_pagos -->
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $auth = new auth();
+            $idUsuario = $auth->obtenerIdUsuario($_SESSION['usuario']);
+            include 'conexion.php';
+
+            // Consulta SQL con INNER JOIN para obtener el nombre del gasto y del usuario
+            $sql = "SELECT t_gastos.nombre_gasto, t_usuarios.usuario, t_pagos.fecha_pago
+                    FROM t_pagos
+                    INNER JOIN t_usuarios ON t_pagos.id_usuario = t_usuarios.id_usuario
+                    INNER JOIN t_gastos ON t_pagos.id_gasto = t_gastos.id_gasto";
+            $result = $conn->query($sql);
+
+            // Mostrar los resultados de la consulta en la tabla
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row["nombre_gasto"] . "</td>";
+                    echo "<td>" . $row["usuario"] . "</td>";
+                    echo "<td>" . $row["fecha_pago"] . "</td>";
+                    // Agrega más celdas según la estructura de tu tabla t_pagos
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='3'>No hay pagos registrados.</td></tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
 
 
     
