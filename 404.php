@@ -10,14 +10,14 @@
 
 <body>
 
-<div class="container text-center mt-5">
-        
+  <div class="container text-center mt-5">
+
     <h1 class="display-1 text-center fw-semibold">Error 404 😵‍💫</h1>
-    <p class="lead fs-4 fw-medium">Página no encontrada</p>
+    <p class="lead fs-4 fw-medium">Página no encontrada 🤖</p>
     <p class="fs-5">La página que estás buscando no pudo ser encontrada.</p>
     <a href="index.php" class="btn btn-primary">Volver al Inicio</a>
-        
-    </div>
+
+  </div>
 
   <script src="assets/js/bootstrap.bundle.min.js"></script>
 </body>
