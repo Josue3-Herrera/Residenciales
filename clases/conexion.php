@@ -1,11 +1,13 @@
 <?php
-class conexion{
-    public $servidor='localhost';
-    public $usuario='root';
-    public $password='';
-    public $database='privadas';
+class conexion
+{
+    public $servidor = 'localhost';
+    public $usuario = 'root';
+    public $password = '';
+    public $database = 'privadas';
 
-    public function conectar(){
+    public function conectar()
+    {
         return mysqli_connect(
             $this->servidor,
             $this->usuario,
@@ -13,6 +15,4 @@ class conexion{
             $this->database
         );
     }
-    
 }
-?>

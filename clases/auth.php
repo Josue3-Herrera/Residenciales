@@ -1,8 +1,10 @@
 <?php
 include 'conexion.php';
 
-class auth extends conexion {
-    public function registrar($usuario, $password, $nombre, $apellidos, $email, $telefono, $direccion) {
+class auth extends conexion
+{
+    public function registrar($usuario, $password, $nombre, $apellidos, $email, $telefono, $direccion)
+    {
         $conexion = parent::conectar();
         $sql = 'INSERT INTO t_usuarios (usuario, password, nombre, apellidos, rol, email, telefono, direccion) VALUES (?, ?, ?, ?, 1, ?, ?, ?)';
         $query = $conexion->prepare($sql);
@@ -20,7 +22,8 @@ class auth extends conexion {
         }
     }
 
-    public function logear($usuario, $password) {
+    public function logear($usuario, $password)
+    {
         $conexion = parent::conectar();
         $passwordExistente = "";
         $sql = "SELECT * FROM t_usuarios WHERE BINARY usuario = '$usuario'";
@@ -35,7 +38,8 @@ class auth extends conexion {
         }
     }
 
-    public function obtenerRol($usuario) {
+    public function obtenerRol($usuario)
+    {
         $conexion = parent::conectar();
         $sql = "SELECT rol FROM t_usuarios WHERE usuario = '$usuario'";
         $resultado = mysqli_query($conexion, $sql);
@@ -43,7 +47,8 @@ class auth extends conexion {
         return $rol;
     }
 
-    public function obtenerIdUsuario($usuario) {
+    public function obtenerIdUsuario($usuario)
+    {
         $conexion = parent::conectar();
         $sql = "SELECT Id_usuario FROM t_usuarios WHERE usuario = ?";
         $query = $conexion->prepare($sql);
@@ -60,4 +65,3 @@ class auth extends conexion {
         }
     }
 }
-?>
