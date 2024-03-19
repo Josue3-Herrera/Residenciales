@@ -46,7 +46,7 @@ if ($rol != 2) {
 
         <a href="#">
           <i class='bx bx-grid-alt'></i>
-          <span class="link_name">Inicio :D</span>
+          <span class="link_name">Inicio</span>
         </a>
 
         <ul class="sub-menu blank">
