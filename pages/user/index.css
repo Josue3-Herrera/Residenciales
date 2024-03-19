@@ -267,9 +267,15 @@
   }
 }
 
-.card{
-  border-color: transparent !important;
+.vencido .card {
+  border: 2px solid red; /* Cambia el color y grosor del borde según necesites */
 }
+
+/* Estilo para tarjetas pendientes */
+.pendiente .card {
+  border: 2px solid green; /* Cambia el color y grosor del borde según necesites */
+}
+
 
 .modal-backdrop {
 z-index: 0 !important;

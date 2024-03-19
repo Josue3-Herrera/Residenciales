@@ -90,6 +90,16 @@ $result = $conn->query($sql);
         </ul>
       </li>
 
+      <li>
+        <a href="proveedores.php">
+        <i class='bx bx-group' ></i>
+          <span class="link_name">Proveedores</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="proveedores.php">Proveedores 👷</a></li>
+        </ul>
+      </li>
+
       <!-- Avisos -->
       <li>
         <a href="avisos.php">

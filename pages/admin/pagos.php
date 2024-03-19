@@ -103,6 +103,16 @@ if ($result->num_rows > 0) {
       </li>
 
       <li>
+        <a href="proveedores.php">
+        <i class='bx bx-group' ></i>
+          <span class="link_name">Proveedores</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="proveedores.php">Proveedores 👷</a></li>
+        </ul>
+      </li>
+
+      <li>
         <a href="avisos.php">
         <i class='bx bx-bell' ></i>
           <span class="link_name">Avisos</span>
@@ -146,7 +156,6 @@ if ($result->num_rows > 0) {
 <!-- Boton para agregar nuevo gasto -->
 <button type="button" class="btn btn-success mx-5 mt-4 fw-semibold fs-6" data-bs-toggle="modal" data-bs-target="#modalForm" style="padding: 1rem; margin-left: 4rem !important;">Agregar nuevo gasto 💲</button>
 
-<!-- Modal de formulario de nuevo gasto-->
 <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -168,6 +177,24 @@ if ($result->num_rows > 0) {
                         <label class="form-label" for="costo" id="costo">Costo</label>
                         <input value="" type="number" step="any" class="form-control" id="costo" name="costo" placeholder="Costo 💵" required/>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="proveedor">Proveedor</label>
+                        <select name="proveedor" id="proveedor" class="form-select" required>
+                            <option value="">Seleccione un proveedor</option>
+                            <?php
+                            include '../conexion.php';
+                            $sql = "SELECT id_proveedor, nombre FROM t_proveedores";
+                            $resultado = $conn->query($sql);
+                            while ($fila = $resultado->fetch_assoc()) {
+                                echo "<option value='{$fila['id_proveedor']}'>{$fila['nombre']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="fecha_exp">Fecha de Caducidad</label>
+                        <input type="date" class="form-control" id="fecha_exp" name="fecha_exp" required/>
+                    </div>
                     <div class="modal-footer d-block">
                         <button type="submit" class="btn btn-warning float-end">Generar <span><i class='bx bxs-send'></i></span></button>
                     </div>
@@ -187,18 +214,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombreGasto = $_POST['nombre_gasto'];
     $descripcion = $_POST['descripcion'];
     $costo = $_POST['costo'];
+    $fechaExp = $_POST['fecha_exp']; // Nueva variable para la fecha de caducidad
+    $idProveedor = $_POST['proveedor']; // Nueva variable para el id_proveedor
 
     // Genera la fecha actual
     $fecha = date('Y-m-d');
 
     // Inserta los datos en la base de datos
-    $sql = "INSERT INTO t_gastos (nombre_gasto, descripcion, fecha, monto) VALUES ('$nombreGasto', '$descripcion', '$fecha', $costo)";
+    $sql = "INSERT INTO t_gastos (nombre_gasto, descripcion, fecha, fecha_exp, monto, id_proveedor) 
+            VALUES ('$nombreGasto', '$descripcion', '$fecha', '$fechaExp', $costo, $idProveedor)";
 
     if ($conn->query($sql) === TRUE) {
         $conn->close(); // Cierra la conexión
 
         // Redirige al usuario a la página de gastos
-        print "<script>window.setTimeout(function() { window.location = '/sistemas-de-informacion/pages/admin/pagos.php' }, 1000);</script>";
+        print "<script>window.setTimeout(function() { window.location = '/RESIDENCIALES/pages/admin/pagos.php' }, 1000);</script>";
         exit(); // Asegura que el script se detenga aquí para evitar cualquier salida adicional
     } else {
         echo "Error al registrar el gasto: " . $conn->error;
@@ -212,7 +242,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php
         include '../conexion.php'; // Incluye tu archivo de conexión
 
-        $sql = "SELECT * FROM t_gastos";
+        $sql = "SELECT g.*, p.nombre AS nombre_proveedor, p.fecha_registro AS fecha_registro_proveedor 
+                FROM t_gastos g
+                INNER JOIN t_proveedores p ON g.id_proveedor = p.id_proveedor";
         $resultado = $conn->query($sql);
 
         if ($resultado->num_rows > 0) {
@@ -226,9 +258,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <h5 class="card-title"><?php echo $fila['nombre_gasto']; ?></h5>
                   <p class="card-text"><?php echo $fila['descripcion']; ?></p>
-                  <p class="card-text">Fecha: <?php echo $fila['fecha']; ?></p>
-                  <p class="card-text">Monto: <?php echo $fila['monto']; ?></p>                 
-                 
+                  <p class="card-text">Fecha de Registro: <?php echo $fila['fecha']; ?></p>
+                  <p class="card-text">Fecha de Caducidad: <?php echo $fila['fecha_exp']; ?></p>
+                  <p class="card-text">Monto: <?php echo $fila['monto']; ?></p>  
+                  <p class="card-text">Proveedor: <?php echo $fila['nombre_proveedor']; ?></p>
                 </div>
               </div>
           </div>

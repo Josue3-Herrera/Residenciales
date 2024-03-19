@@ -79,6 +79,16 @@ if ($rol != 2) {
         </ul>
       </li>
 
+      <li>
+        <a href="proveedores.php">
+        <i class='bx bx-group' ></i>
+          <span class="link_name">Proveedores</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="proveedores.php">Proveedores 👷</a></li>
+        </ul>
+      </li>
+
       <!-- Avisos -->
       <li style="background-color: #107FA3;">
         <a href="avisos.php">
