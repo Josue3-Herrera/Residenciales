@@ -37,7 +37,7 @@ $result = $conn->query($sql);
 <body>
 
   <style>
-    .nombre:hover{
+    .nombre:hover {
       background: #107FA3 !important;
       background-color: #107FA3 !important;
     }
@@ -93,7 +93,7 @@ $result = $conn->query($sql);
       <!-- Avisos -->
       <li>
         <a href="avisos.php">
-        <i class='bx bx-bell' ></i>
+          <i class='bx bx-bell'></i>
           <span class="link_name">Avisos</span>
         </a>
         <ul class="sub-menu blank">
@@ -101,8 +101,8 @@ $result = $conn->query($sql);
         </ul>
       </li>
 
-    <!-- Usuario Admin -->
-    <li>
+      <!-- Usuario Admin -->
+      <li>
         <div class="profile-details">
           <div class="profile-content">
             <img src="https://cdn-icons-png.flaticon.com/512/2206/2206368.png" alt="profileImg">
@@ -122,69 +122,69 @@ $result = $conn->query($sql);
 
   <!-- Sección dentro del Dashboard -->
   <section class="home-section">
-    
+
     <!-- Titulo de sección -->
     <div class="home-content mx-2">
-        <i class='bx bx-menu'></i>
-        <span class="fw-bold fs-4">
-            <span id="saludo" style="color: #107FA3;" class="text-capitalize fs-3">Residentes 👨‍👩‍👦</span> 
-        </span>
+      <i class='bx bx-menu'></i>
+      <span class="fw-bold fs-4">
+        <span id="saludo" style="color: #107FA3;" class="text-capitalize fs-3">Residentes 👨‍👩‍👦</span>
+      </span>
     </div>
 
     <div class="container mt-4">
       <table class="table table-hover table-borderless">
-      <thead>
-      <tr class="table-dark text-center">
-        <th scope="col" class="nombre text-center">Nombre</th>
-        <th scope="col" class="nombre">Apellidos</th>
-        <th scope="col" class="nombre">Usuario</th>
-        <th scope="col" class="nombre">Email</th>
-        <th scope="col" class="nombre">Teléfono</th>
-        <th scope="col" class="nombre">Dirección</th>
-      </tr>
-      </thead>
-      <tbody>
-      <?php
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-      ?>
-          <tr class="text-center">
-            <td><?php echo $row["nombre"]; ?></td>
-            <td><?php echo $row["apellidos"]; ?></td>
-            <td><?php echo $row["usuario"]; ?></td>
-            <td><?php echo $row["email"]; ?></td>
-            <td><?php echo $row["telefono"]; ?></td>
-            <td><?php echo $row["direccion"]; ?></td>
+        <thead>
+          <tr class="table-dark text-center">
+            <th scope="col" class="nombre text-center">Nombre</th>
+            <th scope="col" class="nombre">Apellidos</th>
+            <th scope="col" class="nombre">Usuario</th>
+            <th scope="col" class="nombre">Email</th>
+            <th scope="col" class="nombre">Teléfono</th>
+            <th scope="col" class="nombre">Dirección</th>
           </tr>
-      <?php
-        }
-      } else {
-        echo "<tr><td colspan='4'>No se encontraron usuarios con rol 1.</td></tr>";
-      }
-      $conn->close();
-      ?>
-    </tbody>
-  </table>
-</div>
+        </thead>
+        <tbody>
+          <?php
+          if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+          ?>
+              <tr class="text-center">
+                <td><?php echo $row["nombre"]; ?></td>
+                <td><?php echo $row["apellidos"]; ?></td>
+                <td><?php echo $row["usuario"]; ?></td>
+                <td><?php echo $row["email"]; ?></td>
+                <td><?php echo $row["telefono"]; ?></td>
+                <td><?php echo $row["direccion"]; ?></td>
+              </tr>
+          <?php
+            }
+          } else {
+            echo "<tr><td colspan='4'>No ssse encontraron usuarios con rol 1.</td></tr>";
+          }
+          $conn->close();
+          ?>
+        </tbody>
+      </table>
+    </div>
 
   </section>
 
 
-<script>
-let arrow = document.querySelectorAll(".arrow");
-for (var i = 0; i < arrow.length; i++) {
-  arrow[i].addEventListener("click", (e) => {
-    let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
-    arrowParent.classList.toggle("showMenu");
-  });
-}
-let sidebar = document.querySelector(".sidebar");
-let sidebarBtn = document.querySelector(".bx-menu");
-console.log(sidebarBtn);
-sidebarBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("close");
-});
-</script>
+  <script>
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+      arrow[i].addEventListener("click", (e) => {
+        let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+        arrowParent.classList.toggle("showMenu");
+      });
+    }
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    console.log(sidebarBtn);
+    sidebarBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    });
+  </script>
 
   <script src="../../assets/js/bootstrap.bundle.min.js"></script>
 
