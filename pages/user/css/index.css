@@ -267,10 +267,6 @@
   }
 }
 
-.card{
-  border-color: transparent !important;
-}
-
 .modal-backdrop {
 z-index: 0 !important;
 }

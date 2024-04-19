@@ -46,7 +46,7 @@ if ($rol != 2) {
 
         <a href="#">
           <i class='bx bx-grid-alt'></i>
-          <span class="link_name">Inicio :D</span>
+          <span class="link_name">Inicio</span>
         </a>
 
         <ul class="sub-menu blank">
@@ -81,6 +81,21 @@ if ($rol != 2) {
           <li><a class="link_name" href="residentes.php">Residentes 👨🏻‍👩🏻‍👧🏼</a></li>
         </ul>
       </li>
+
+
+      <!-- Mascotas -->
+      <li>
+
+        <a href="mascotas.php">
+          <i class='bx bxs-dog'></i>
+          <span class="link_name">Residentes</span>
+        </a>
+
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="mascotas.php">Mascotas 🐶</a></li>
+        </ul>
+      </li>
+
 
       <li>
         <a href="proveedores.php">

@@ -92,42 +92,7 @@ if ($rol != 1) {
       </span>
     </div>
 
-    <!-- Modal de formulario de nuevo aviso-->
-    <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Nuevo aviso</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <form action="avisos.php" method="post" name="myform">
-              <div class="mb-3">
-                <label class="form-label">Nombre de aviso 📋</label>
-                <input type="text" class="form-control" id="nombre_aviso" name="nombre_aviso" placeholder="Nombre" required />
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Descripcion</label>
-                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion 🗒️" required />
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="importancia" id="importancia">Importancia</label>
-                <select name="aviso" id="aviso" class="form-select" required>
-                  <option value="">Seleccione una opción</option>
-                  <option value="1">Alta ⚠️</option>
-                  <option value="2">Media 🚨</option>
-                  <option value="3">Baja 👍🏻</option>
-                  <option value="4">Resuelto ✅</option>
-                </select>
-              </div>
-              <div class="modal-footer d-block">
-                <button type="submit" class="btn btn-warning float-end">Generar <span><i class='bx bxs-send'></i></span></button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
 
     <?php
@@ -158,27 +123,26 @@ if ($rol != 1) {
     <div class="container mt-5">
       <h1 class="mb-4">Lista de Avisos</h1>
       <div class="container mt-5">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Descripción</th>
-              <th scope="col">Fecha</th>
-              <th scope="col">Importancia</th>
-              <th scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            include '../conexion.php';
+      <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Importancia</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        include '../conexion.php';
 
-            $sql = "SELECT * FROM t_avisos";
-            $resultado = $conn->query($sql);
+        $sql = "SELECT * FROM t_avisos";
+        $resultado = $conn->query($sql);
 
-            if ($resultado->num_rows > 0) {
-              $i = 1;
-              while ($fila = $resultado->fetch_assoc()) {
+        if ($resultado->num_rows > 0) {
+            $i = 1;
+            while ($fila = $resultado->fetch_assoc()) {
                 $idAviso = $fila['id_aviso'];
                 $nombreAviso = $fila['nombre_aviso'];
                 $descripcion = $fila['descripcion'];
@@ -186,79 +150,34 @@ if ($rol != 1) {
                 $importancia = $fila['importancia'];
 
                 $importanciaClasses = [
-                  'Alta' => 'bg-danger',
-                  'Media' => 'bg-warning',
-                  'Baja' => 'bg-success',
-                  'Resuelto' => 'bg-primary',
-                  'Desconocida' => 'bg-secondary',
+                    'Alta' => 'bg-danger',
+                    'Media' => 'bg-warning',
+                    'Baja' => 'bg-success',
+                    'Resuelto' => 'bg-primary',
+                    'Desconocida' => 'bg-secondary',
                 ];
 
                 $importanciaClass = $importanciaClasses[$importancia] ?? $importanciaClasses['Desconocida'];
-            ?>
+                ?>
                 <tr>
-                  <th scope="row"><?= $i ?></th>
-                  <td><?= $nombreAviso ?></td>
-                  <td><?= $descripcion ?></td>
-                  <td><?= $fecha ?></td>
-                  <td><span class="badge <?= $importanciaClass ?>"><?= $importancia ?></span></td>
-                  <td>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#editarAvisoModal<?= $idAviso ?>" class="btn btn-success">Editar</a>
-                  </td>
+                    <th scope="row"><?= $i ?></th>
+                    <td><?= $nombreAviso ?></td>
+                    <td><?= $descripcion ?></td>
+                    <td><?= $fecha ?></td>
+                    <td><span class="badge <?= $importanciaClass ?>"><?= $importancia ?></span></td>
                 </tr>
-
-                <!-- Modal de edición para cada aviso -->
-                <div class="modal fade" id="editarAvisoModal<?= $idAviso ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar Aviso</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <form action="/sistemas-de-informacion/pages/admin/editar_aviso.php" method="post">
-                          <input type="hidden" name="id_aviso" value="<?= $idAviso ?>">
-                          <div class="mb-3">
-                            <label class="form-label">Nombre de aviso 📋</label>
-                            <input type="text" class="form-control" name="nombre_aviso" value="<?= $nombreAviso ?>" required />
-                          </div>
-                          <div class="mb-3">
-                            <label class="form-label">Descripción</label>
-                            <input type="text" class="form-control" name="descripcion" value="<?= $descripcion ?>" required />
-                          </div>
-                          <div class="mb-3">
-                            <label class="form-label" for="importancia">Importancia</label>
-                            <select name="importancia" class="form-select" required>
-                              <?php
-                              $importancias = ['Alta', 'Media', 'Baja', 'Resuelto'];
-                              foreach ($importancias as $imp) {
-                                $selected = ($imp === $importancia) ? 'selected' : '';
-                                echo "<option value='$imp' $selected>$imp</option>";
-                              }
-                              ?>
-                            </select>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            <?php
+                <?php
                 $i++;
-              }
-            } else {
-              echo "<tr><td colspan='6'>No se encontraron avisos.</td></tr>";
             }
+        } else {
+            echo "<tr><td colspan='5'>No se encontraron avisos.</td></tr>";
+        }
 
-            $conn->close();
-            ?>
-          </tbody>
-      </div>
+        $conn->close();
+        ?>
+    </tbody>
+</table>
 
-      </table>
     </div>
 
 

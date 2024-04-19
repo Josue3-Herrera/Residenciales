@@ -91,7 +91,7 @@ if ($rol != 2) {
         </ul>
       </li>
 
-      <li>
+      <li style="background-color: #107FA3;">
         <a href="proveedores.php">
           <i class='bx bx-group'></i>
           <span class="link_name">Proveedores</span>
@@ -102,7 +102,7 @@ if ($rol != 2) {
       </li>
 
       <!-- Avisos -->
-      <li style="background-color: #107FA3;">
+      <li>
         <a href="avisos.php">
           <i class='bx bx-bell'></i>
           <span class="link_name">Avisos</span>
@@ -138,43 +138,45 @@ if ($rol != 2) {
     <div class="home-content mx-2">
       <i class='bx bx-menu'></i>
       <span class="fw-bold fs-4">
-        <span id="saludo" style="color: #107FA3;" class="text-capitalize fs-3">Avisos 🚨</span>
+        <span id="saludo" style="color: #107FA3;" class="text-capitalize fs-3">Proveedores 👷</span>
       </span>
     </div>
 
-    <!-- Boton para agregar nuevo aviso 🚨 -->
-    <button type="button" class="btn btn-success mx-5 mt-4 fw-semibold fs-6" data-bs-toggle="modal" data-bs-target="#modalForm" style="padding: 1rem; margin-left: 4rem !important; background-color: #107FA3; border-color: transparent;">Agregar nuevo aviso</button>
+    <!-- Boton para agregar proveedor 👷 -->
+    <button type="button" class="btn btn-success mx-5 mt-4 fw-semibold fs-6" data-bs-toggle="modal" data-bs-target="#modalForm" style="padding: 1rem; margin-left: 4rem !important; background-color: #107FA3; border-color: transparent;">Agregar proveedor</button>
 
-    <!-- Modal de formulario de nuevo aviso-->
+    <!-- Modal de formulario de nuevo proveedor-->
     <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Nuevo aviso</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Nuevo proveedor</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <form action="avisos.php" method="post" name="myform">
+            <form action="proveedores.php" method="post" name="myform">
               <div class="mb-3">
-                <label class="form-label">Nombre de aviso 📋</label>
-                <input type="text" class="form-control" id="nombre_aviso" name="nombre_aviso" placeholder="Nombre" required />
+                <label class="form-label">Nombre del proveedor 📝</label>
+                <input type="text" class="form-control" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre" required />
               </div>
               <div class="mb-3">
-                <label class="form-label">Descripcion</label>
-                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion 🗒️" required />
+                <label class="form-label">Servicio ofrecido</label>
+                <input type="text" class="form-control" id="servicio_ofrecido" name="servicio_ofrecido" placeholder="Servicio ofrecido" required />
               </div>
               <div class="mb-3">
-                <label class="form-label" for="importancia" id="importancia">Importancia</label>
-                <select name="aviso" id="aviso" class="form-select" required>
-                  <option value="">Seleccione una opción</option>
-                  <option value="1">Alta ⚠️</option>
-                  <option value="2">Media 🚨</option>
-                  <option value="3">Baja 👍🏻</option>
-                  <option value="4">Resuelto ✅</option>
-                </select>
+                <label class="form-label">Teléfono de contacto</label>
+                <input type="text" class="form-control" id="telefono_contacto" name="telefono_contacto" placeholder="Teléfono de contacto" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email de contacto</label>
+                <input type="email" class="form-control" id="email_contacto" name="email_contacto" placeholder="Email de contacto" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required />
               </div>
               <div class="modal-footer d-block">
-                <button type="submit" class="btn btn-warning float-end">Generar <span><i class='bx bxs-send'></i></span></button>
+                <button type="submit" class="btn btn-warning float-end">Registrar <span><i class='bx bxs-edit-alt'></i></span></button>
               </div>
             </form>
           </div>
@@ -182,43 +184,44 @@ if ($rol != 2) {
       </div>
     </div>
 
-
     <?php
     // Verifica si se envió el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       include '../conexion.php'; // Incluye tu archivo de conexión
 
       // Obtén los datos del formulario
-      $nombreAviso = $_POST['nombre_aviso'];
-      $descripcion = $_POST['descripcion'];
-      $importancia = $_POST['aviso'];
+      $nombreProveedor = $_POST['nombre_proveedor'];
+      $servicioOfrecido = $_POST['servicio_ofrecido'];
+      $telefonoContacto = $_POST['telefono_contacto'];
+      $emailContacto = $_POST['email_contacto'];
+      $direccion = $_POST['direccion'];
       $fecha = date('Y-m-d');
 
       // Inserta los datos en la base de datos
-      $sql = "INSERT INTO t_avisos (nombre_aviso, descripcion, fecha, importancia) 
-            VALUES ('$nombreAviso', '$descripcion', '$fecha', '$importancia')";
+      $sql = "INSERT INTO t_proveedores (nombre, servicio_ofrecido, telefono_contacto, email_contacto, direccion, fecha_registro) 
+            VALUES ('$nombreProveedor', '$servicioOfrecido', '$telefonoContacto', '$emailContacto', '$direccion', '$fecha')";
 
       if ($conn->query($sql) === TRUE) {
         $conn->close(); // Cierra la conexión
-        echo "El aviso fue generado correctamente";
-        print "<script>window.setTimeout(function() { window.location = '/sistemas-de-informacion/pages/admin/avisos.php' }, 1000);</script>";
+        echo "El proveedor fue registrado correctamente";
+        print "<script>window.setTimeout(function() { window.location = '/RESIDENCIALES/pages/admin/proveedores.php' }, 1000);</script>";
       } else {
-        echo "Error al registrar el aviso: " . $conn->error;
+        echo "Error al registrar el proveedor: " . $conn->error;
       }
     }
     ?>
 
     <div class="container mt-5">
-      <h1 class="mb-4">Lista de Avisos</h1>
+      <h1 class="mb-4">Lista de Proveedores</h1>
       <div class="container mt-5">
         <table class="table">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Descripción</th>
-              <th scope="col">Fecha</th>
-              <th scope="col">Importancia</th>
+              <th scope="col">Servicio Ofrecido</th>
+              <th scope="col">Contacto</th>
+              <th scope="col">Fecha Registro</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
@@ -226,69 +229,62 @@ if ($rol != 2) {
             <?php
             include '../conexion.php';
 
-            $sql = "SELECT * FROM t_avisos";
+            $sql = "SELECT * FROM t_proveedores";
             $resultado = $conn->query($sql);
 
             if ($resultado->num_rows > 0) {
               $i = 1;
               while ($fila = $resultado->fetch_assoc()) {
-                $idAviso = $fila['id_aviso'];
-                $nombreAviso = $fila['nombre_aviso'];
-                $descripcion = $fila['descripcion'];
-                $fecha = $fila['fecha'];
-                $importancia = $fila['importancia'];
-
-                $importanciaClasses = [
-                  'Alta' => 'bg-danger',
-                  'Media' => 'bg-warning',
-                  'Baja' => 'bg-success',
-                  'Resuelto' => 'bg-primary',
-                  'Desconocida' => 'bg-secondary',
-                ];
-
-                $importanciaClass = $importanciaClasses[$importancia] ?? $importanciaClasses['Desconocida'];
+                $idProveedor = $fila['id_proveedor'];
+                $nombreProveedor = $fila['nombre'];
+                $servicioOfrecido = $fila['servicio_ofrecido'];
+                $telefonoContacto = $fila['telefono_contacto'];
+                $emailContacto = $fila['email_contacto'];
+                $direccion = $fila['direccion'];
+                $fechaRegistro = $fila['fecha_registro'];
             ?>
                 <tr>
                   <th scope="row"><?= $i ?></th>
-                  <td><?= $nombreAviso ?></td>
-                  <td><?= $descripcion ?></td>
-                  <td><?= $fecha ?></td>
-                  <td><span class="badge <?= $importanciaClass ?>"><?= $importancia ?></span></td>
+                  <td><?= $nombreProveedor ?></td>
+                  <td><?= $servicioOfrecido ?></td>
+                  <td><?= $telefonoContacto ?> (<?= $emailContacto ?>)</td>
+                  <td><?= $fechaRegistro ?></td>
                   <td>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#editarAvisoModal<?= $idAviso ?>" class="btn btn-success">Editar</a>
+                    <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editarProveedorModal<?= $idProveedor ?>">Editar</a>
+                    <a href="#" class="btn btn-danger">Eliminar</a>
                   </td>
                 </tr>
 
-                <!-- Modal de edición para cada aviso -->
-                <div class="modal fade" id="editarAvisoModal<?= $idAviso ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <!-- Modal de edición para cada proveedor -->
+                <div class="modal fade" id="editarProveedorModal<?= $idProveedor ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar Aviso</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Proveedor</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <form action="/sistemas-de-informacion/pages/admin/editar_aviso.php" method="post">
-                          <input type="hidden" name="id_aviso" value="<?= $idAviso ?>">
+                        <form action="/RESIDENCIALES/pages/admin/editar_proveedor.php" method="post">
+                          <input type="hidden" name="id_proveedor" value="<?= $idProveedor ?>">
                           <div class="mb-3">
-                            <label class="form-label">Nombre de aviso 📋</label>
-                            <input type="text" class="form-control" name="nombre_aviso" value="<?= $nombreAviso ?>" required />
+                            <label class="form-label">Nombre de proveedor 📋</label>
+                            <input type="text" class="form-control" name="nombre_proveedor" value="<?= $nombreProveedor ?>" required />
                           </div>
                           <div class="mb-3">
-                            <label class="form-label">Descripción</label>
-                            <input type="text" class="form-control" name="descripcion" value="<?= $descripcion ?>" required />
+                            <label class="form-label">Servicio Ofrecido</label>
+                            <input type="text" class="form-control" name="servicio_ofrecido" value="<?= $servicioOfrecido ?>" required />
                           </div>
                           <div class="mb-3">
-                            <label class="form-label" for="importancia">Importancia</label>
-                            <select name="importancia" class="form-select" required>
-                              <?php
-                              $importancias = ['Alta', 'Media', 'Baja', 'Resuelto'];
-                              foreach ($importancias as $imp) {
-                                $selected = ($imp === $importancia) ? 'selected' : '';
-                                echo "<option value='$imp' $selected>$imp</option>";
-                              }
-                              ?>
-                            </select>
+                            <label class="form-label">Teléfono de Contacto</label>
+                            <input type="text" class="form-control" name="telefono_contacto" value="<?= $telefonoContacto ?>" required />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Email de Contacto</label>
+                            <input type="email" class="form-control" name="email_contacto" value="<?= $emailContacto ?>" required />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" class="form-control" name="direccion" value="<?= $direccion ?>" required />
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -303,7 +299,7 @@ if ($rol != 2) {
                 $i++;
               }
             } else {
-              echo "<tr><td colspan='6'>No se encontraron avisos.</td></tr>";
+              echo "<tr><td colspan='6'>No hay proveedores registrados</td></tr>";
             }
 
             $conn->close();

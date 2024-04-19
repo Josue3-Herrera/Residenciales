@@ -1,8 +1,9 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['usuario'])) {
-  header("location:../../index.php");
-  exit();
+    header("location:../../index.php");
+    exit();
 }
 
 include '../../clases/auth.php';
@@ -11,10 +12,29 @@ $auth = new auth();
 $rol = $auth->obtenerRol($_SESSION['usuario']);
 
 if ($rol != 1) {
-  header("location: ../../index.php");
-  exit();
+    header("location: ../../index.php");
+    exit();
 }
+
+include '../conexion.php';
+
+$usuario = $_SESSION['usuario'];
+$id_usuario = $auth->obtenerIdUsuario($usuario);
+
+$sql = "SELECT id_gasto FROM t_pagos WHERE id_usuario = $id_usuario";
+$resultado = $conn->query($sql);
+
+$pagos = [];
+
+if ($resultado && $resultado->num_rows > 0) {
+    while ($fila = $resultado->fetch_assoc()) {
+        $pagos[] = $fila['id_gasto'];
+    }
+}
+
+$conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -22,7 +42,7 @@ if ($rol != 1) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio</title>
+  <title>Bienvenido <?php echo $_SESSION['usuario'] ?></title>
   <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4919/4919646.png">
   <link rel="stylesheet" href="css/index.css">
@@ -30,15 +50,27 @@ if ($rol != 1) {
 </head>
 
 <body>
+
 <style>
+   /* Estilo para tarjetas vencidas */
+    .vencido .card {
+      border: 2px solid red !important; /* Borde rojo para tarjetas vencidas */
+    }
+
+    /* Estilo para tarjetas pendientes */
+    .pendiente .card {
+      border: 2px solid green !important; /* Borde verde para tarjetas pendientes */
+    }
+
     .card:hover {
-        border-radius: 4px;
-        background-color: #CEEEF9; 
-        transition: 0.3s;
+      border-radius: 4px;
+      background-color: #CEEEF9; /* Color de fondo al pasar el mouse */
+      transition: 0.3s;
+      cursor: pointer;
     }
 
     .card .card-body a.btn-primary:hover {
-        background-color: #007bff;
+      background-color: #007bff; /* Color de fondo del botón primario al pasar el mouse */
     }
   </style>
 
@@ -56,7 +88,7 @@ if ($rol != 1) {
       <li style="background-color: #107FA3;">
 
         <a href="#">
-          <i class='bx bx-grid-alt'></i>
+        <i class='bx bx-money'></i>
           <span class="link_name">Inicio</span>
         </a>
 
@@ -102,12 +134,13 @@ if ($rol != 1) {
     </span>
     <br>
     <br>
-      <span id="textoPagos">(Pagos 💸)</span>
+      <span id="textoPagos">(Pagos 💸) <?php echo date("Y-m-d"); ?></span>
   </div>
+<!-- CARDS   -->
+<!-- CARDS   -->
+<!-- CARDS   -->
 
-
-    <!-- CARDS   -->
-    <div class="container mt-4">
+<div class="container mt-4">
     <div class="row row-cols-1 row-cols-md-4 g-4">
         <?php
         include '../conexion.php'; // Incluye tu archivo de conexión
@@ -116,61 +149,52 @@ if ($rol != 1) {
         $resultado = $conn->query($sql);
 
         if ($resultado->num_rows > 0) {
-            while($fila = $resultado->fetch_assoc()) {
-        ?>
-
-          <div class="col cards">
-
-            <div class="card shadow">
-              <div class="card-body" data-bs-toggle="modal" data-bs-target="#modal_<?php echo $fila['Id_gasto']; ?>">
-
-                <h5 class="card-title"><?php echo $fila['nombre_gasto']; ?></h5>
-                  <p class="card-text"><?php echo $fila['descripcion']; ?></p>
-                  <p class="card-text">Fecha: <?php echo $fila['fecha']; ?></p>
-                  <p class="card-text">Monto: <?php echo $fila['monto']; ?></p>                 
+            while ($fila = $resultado->fetch_assoc()) {
+                ?>
+                  <div class="col <?php echo (in_array($fila['Id_gasto'], $pagos) ? 'vencido' : 'pendiente'); ?>" id="card_<?php echo $fila['Id_gasto']; ?>" data-nombre="<?php echo $fila['nombre_gasto']; ?>" data-descripcion="<?php echo $fila['descripcion']; ?>" data-fecha="<?php echo $fila['fecha']; ?>" data-monto="<?php echo $fila['monto']; ?>" data-fecha-exp="<?php echo $fila['fecha_exp']; ?>">
+                    <div class="card shadow">
+                        <div class="card-body" data-bs-toggle="modal" data-bs-target="#modal_<?php echo $fila['Id_gasto']; ?>">
+                            <h5 class="card-title"><?php echo $fila['nombre_gasto']; ?></h5>
+                            <p class="card-text"><?php echo $fila['descripcion']; ?></p>
+                            <p class="card-text">Fecha: <?php echo $fila['fecha']; ?></p>
+                            <p class="card-text">Vencimiento: <?php echo $fila['fecha_exp']; ?></p>
+                            <p class="card-text">Monto: <?php echo $fila['monto']; ?></p>
+                        </div>
+                    </div>
                 </div>
-              </div>
-          </div>
 
-          <div class="modal fade" id="modal_<?php echo $fila['Id_gasto']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalLabel_<?php echo $fila['Id_gasto']; ?>" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel_<?php echo $fila['Id_gasto']; ?>">Formulario de Pago</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-    <!-- Aquí va tu formulario de pago -->
-          <form action="procesar_pago.php" method="post">
-              <div class="mb-3">
-                  <label for="monto">Monto a pagar:</label>
-                  <input type="text" class="form-control" id="monto" name="monto">
-              </div>
-              <div class="mb-3">
-                  <label for="nombre">Nombre:</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre">
-              </div>
-              <div class="mb-3">
-                  <label for="concepto">Concepto:</label>
-                  <input type="text" class="form-control" id="concepto" name="concepto">
-              </div>
-              <div class="mb-3">
-                  <label for="fecha_hora">Fecha y hora del pago:</label>
-                  <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora">
-              </div>
-              <button type="submit" class="btn btn-primary">Realizar Pago</button>
-          </form>
-      </div>
+                <div class="modal fade" id="modal_<?php echo $fila['Id_gasto']; ?>" tabindex="-1" role="dialog"
+                    aria-labelledby="modalLabel_<?php echo $fila['Id_gasto']; ?>" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel_<?php echo $fila['Id_gasto']; ?>">Formulario de
+                                    Pago</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Aquí va tu formulario de pago -->
+                                <form id="formularioPago_<?php echo $fila['Id_gasto']; ?>" action="procesar_pago.php" method="post">
+                                    <input type="hidden" name="id_gasto" value="<?php echo $fila['Id_gasto']; ?>">
+                                    <div class="mb-3">
+                                        <label for="monto">Monto a pagar:</label>
+                                        <input type="text" class="form-control" id="monto" name="monto">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="concepto">Concepto:</label>
+                                        <input type="text" class="form-control" id="concepto" name="concepto">
+                                    </div>
 
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+                                    <button type="submit" class="btn btn-primary btn-pagar" data-bs-target="#modalPagar_<?php echo $idGasto; ?>">Pagar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <?php
+                <?php
             }
         } else {
             echo "No se encontraron gastos.";
@@ -182,6 +206,51 @@ if ($rol != 1) {
 </div>
 
 </section>
+
+<script src="../../assets/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Rellenar formulario y el status del pago
+    function llenarFormulario(idGasto) {
+        var tarjeta = document.querySelector('#card_' + idGasto);
+        if (tarjeta) {
+            var nombre = tarjeta.dataset.nombre;
+            var descripcion = tarjeta.dataset.descripcion;
+            var fecha = tarjeta.dataset.fecha;
+            var monto = tarjeta.dataset.monto;
+
+            // Rellenar el formulario con los datos de la tarjeta
+            var formulario = document.querySelector('#formularioPago_' + idGasto);
+            formulario.querySelector('#monto').value = monto;
+            formulario.querySelector('#concepto').value = nombre + ': ' + descripcion;
+        } else {
+            console.error("Card not found");
+        }
+    }
+
+    // Código para manejar el evento de apertura del modal
+    document.addEventListener('DOMContentLoaded', function() {
+        var modales = document.querySelectorAll('.modal');
+        modales.forEach(function(modal) {
+            modal.addEventListener('show.bs.modal', function(event) {
+                var idGasto = event.relatedTarget.dataset.bsTarget.split('_')[1];
+                llenarFormulario(idGasto);
+            });
+        });
+      });
+</script>
+
+<script src="eliminar_tarjeta.js"></script>
+<script>
+    // Luego de que el DOM esté completamente cargado
+    document.addEventListener('DOMContentLoaded', function() {
+        <?php
+        foreach ($pagos as $idGasto) {
+            echo "eliminarTarjeta($idGasto);";
+        }
+        ?>
+    });
+</script>
 
 <script>
    // Obtener la hora actual
@@ -234,9 +303,59 @@ sidebarBtn.addEventListener("click", () => {
 });
 </script>
 
-  <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+<script>
+    function verificarEstadoVencimiento(idGasto) {
+    var tarjeta = document.querySelector('#card_' + idGasto);
+    if (tarjeta) {
+        var fechaExpStr = tarjeta.dataset.fechaExp;
+        
+        // Verificar si fechaExpStr es válido
+        if (fechaExpStr) {
+            var partes = fechaExpStr.split('-');
+            var fechaExp = new Date(partes[0], partes[1] - 1, partes[2]);
+            var fechaActual = new Date(new Date().setHours(0, 0, 0, 0));
 
-  <script src="script.js"></script>
+            if (fechaExp.getTime() < fechaActual.getTime()) {
+                tarjeta.classList.add('vencido');
+                tarjeta.classList.remove('pendiente');
+            } else {
+                tarjeta.classList.remove('vencido');
+                tarjeta.classList.add('pendiente');
+            }
+        } else {
+            console.error("Fecha de vencimiento no válida");
+        }
+    } else {
+        console.error("Card not found");
+    }
+}
+
+// Verificar el estado de todas las tarjetas al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    var tarjetas = document.querySelectorAll('.card');
+    tarjetas.forEach(function(tarjeta) {
+        var idGasto;
+        var idTarjeta = tarjeta.id;
+        
+        // Imprimir el ID de la tarjeta en la consola
+        console.log("ID de la tarjeta:", idTarjeta);
+        
+        // Verificar si el ID tiene el formato esperado
+        if (idTarjeta.startsWith('card_')) {
+            idGasto = idTarjeta.split('_')[1];
+        } else {
+            console.error("ID inválido para la tarjeta:", idTarjeta);
+            return; // Saltar a la siguiente iteración
+        }
+        
+        if (idGasto) {
+            verificarEstadoVencimiento(idGasto);
+        } else {
+            console.error("ID inválido para la tarjeta:", idTarjeta);
+        }
+    });
+});
+</script>
 
 </body>
 

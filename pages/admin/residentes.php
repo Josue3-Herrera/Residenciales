@@ -90,6 +90,29 @@ $result = $conn->query($sql);
         </ul>
       </li>
 
+
+      <!-- Mascotas -->
+      <li>
+        <a href="mascotas.php">
+          <i class='bx bxs-dog'></i>
+          <span class="link_name">Residentes</span>
+        </a>
+
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="mascotas.php">Mascotas 🐶</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="proveedores.php">
+          <i class='bx bx-group'></i>
+          <span class="link_name">Proveedores</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="proveedores.php">Proveedores 👷</a></li>
+        </ul>
+      </li>
+
       <!-- Avisos -->
       <li>
         <a href="avisos.php">
@@ -159,7 +182,7 @@ $result = $conn->query($sql);
           <?php
             }
           } else {
-            echo "<tr><td colspan='4'>No ssse encontraron usuarios con rol 1.</td></tr>";
+            echo "<tr><td colspan='4'>No se encontraron usuarios con rol 1.</td></tr>";
           }
           $conn->close();
           ?>
