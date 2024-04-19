@@ -40,14 +40,14 @@ if ($result->num_rows > 0) {
 
 <body>
   <style>
-     .card:hover {
-        border-radius: 4px;
-        background-color: #CEEEF9; 
-        transition: 0.3s;
+    .card:hover {
+      border-radius: 4px;
+      background-color: #CEEEF9;
+      transition: 0.3s;
     }
 
     .card .card-body a.btn-primary:hover {
-        background-color: #007bff;
+      background-color: #007bff;
     }
   </style>
 
@@ -102,9 +102,23 @@ if ($result->num_rows > 0) {
         </ul>
       </li>
 
+      <!-- Mascotas -->
+      <li>
+        <a href="mascotas.php">
+          <i class='bx bxs-dog'></i>
+          <span class="link_name">Residentes</span>
+        </a>
+
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="mascotas.php">Mascotas 🐶</a></li>
+        </ul>
+      </li>
+
+
+
       <li>
         <a href="proveedores.php">
-        <i class='bx bx-group' ></i>
+          <i class='bx bx-group'></i>
           <span class="link_name">Proveedores</span>
         </a>
         <ul class="sub-menu blank">
@@ -114,7 +128,7 @@ if ($result->num_rows > 0) {
 
       <li>
         <a href="avisos.php">
-        <i class='bx bx-bell' ></i>
+          <i class='bx bx-bell'></i>
           <span class="link_name">Avisos</span>
         </a>
         <ul class="sub-menu blank">
@@ -122,8 +136,8 @@ if ($result->num_rows > 0) {
         </ul>
       </li>
 
-    <!-- Usuario Admin -->
-    <li>
+      <!-- Usuario Admin -->
+      <li>
         <div class="profile-details">
           <div class="profile-content">
             <img src="https://cdn-icons-png.flaticon.com/512/2206/2206368.png" alt="profileImg">
@@ -143,102 +157,102 @@ if ($result->num_rows > 0) {
 
   <!-- Sección dentro del Dashboard -->
   <section class="home-section">
-    
+
     <!-- Titulo de sección -->
     <div class="home-content mx-2">
-        <i class='bx bx-menu'></i>
-        <span class="fw-bold fs-4">
-            <span id="saludo" style="color: #107FA3;" class="text-capitalize fs-3">Pagos 💵</span> 
-        </span>
+      <i class='bx bx-menu'></i>
+      <span class="fw-bold fs-4">
+        <span id="saludo" style="color: #107FA3;" class="text-capitalize fs-3">Pagos 💵</span>
+      </span>
     </div>
 
 
-<!-- Boton para agregar nuevo gasto -->
-<button type="button" class="btn btn-success mx-5 mt-4 fw-semibold fs-6" data-bs-toggle="modal" data-bs-target="#modalForm" style="padding: 1rem; margin-left: 4rem !important;">Agregar nuevo gasto 💲</button>
+    <!-- Boton para agregar nuevo gasto -->
+    <button type="button" class="btn btn-success mx-5 mt-4 fw-semibold fs-6" data-bs-toggle="modal" data-bs-target="#modalForm" style="padding: 1rem; margin-left: 4rem !important;">Agregar nuevo gasto 💲</button>
 
-<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nuevo gasto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form action="pagos.php" method="post" name="myform">
-                    <div class="mb-3">
-                        <label class="form-label">Nombre de gasto 📋</label>
-                        <input type="text" class="form-control" id="nombre_gasto" name="nombre_gasto" placeholder="Nombre" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Descripcion</label>
-                        <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion 🗒️" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="costo" id="costo">Costo</label>
-                        <input value="" type="number" step="any" class="form-control" id="costo" name="costo" placeholder="Costo 💵" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="proveedor">Proveedor</label>
-                        <select name="proveedor" id="proveedor" class="form-select" required>
-                            <option value="">Seleccione un proveedor</option>
-                            <?php
-                            include '../conexion.php';
-                            $sql = "SELECT id_proveedor, nombre FROM t_proveedores";
-                            $resultado = $conn->query($sql);
-                            while ($fila = $resultado->fetch_assoc()) {
-                                echo "<option value='{$fila['id_proveedor']}'>{$fila['nombre']}</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="fecha_exp">Fecha de Caducidad</label>
-                        <input type="date" class="form-control" id="fecha_exp" name="fecha_exp" required/>
-                    </div>
-                    <div class="modal-footer d-block">
-                        <button type="submit" class="btn btn-warning float-end">Generar <span><i class='bx bxs-send'></i></span></button>
-                    </div>
-                </form>
-            </div>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Nuevo gasto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form action="pagos.php" method="post" name="myform">
+              <div class="mb-3">
+                <label class="form-label">Nombre de gasto 📋</label>
+                <input type="text" class="form-control" id="nombre_gasto" name="nombre_gasto" placeholder="Nombre" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion 🗒️" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="costo" id="costo">Costo</label>
+                <input value="" type="number" step="any" class="form-control" id="costo" name="costo" placeholder="Costo 💵" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="proveedor">Proveedor</label>
+                <select name="proveedor" id="proveedor" class="form-select" required>
+                  <option value="">Seleccione un proveedor</option>
+                  <?php
+                  include '../conexion.php';
+                  $sql = "SELECT id_proveedor, nombre FROM t_proveedores";
+                  $resultado = $conn->query($sql);
+                  while ($fila = $resultado->fetch_assoc()) {
+                    echo "<option value='{$fila['id_proveedor']}'>{$fila['nombre']}</option>";
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="fecha_exp">Fecha de Caducidad</label>
+                <input type="date" class="form-control" id="fecha_exp" name="fecha_exp" required />
+              </div>
+              <div class="modal-footer d-block">
+                <button type="submit" class="btn btn-warning float-end">Generar <span><i class='bx bxs-send'></i></span></button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
-<?php
+    <?php
 
-// Envía el formulario de gastos
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include '../conexion.php'; // Incluye tu archivo de conexión
+    // Envía el formulario de gastos
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      include '../conexion.php'; // Incluye tu archivo de conexión
 
-    // Obtén los datos del formulario
-    $nombreGasto = $_POST['nombre_gasto'];
-    $descripcion = $_POST['descripcion'];
-    $costo = $_POST['costo'];
-    $fechaExp = $_POST['fecha_exp']; // Nueva variable para la fecha de caducidad
-    $idProveedor = $_POST['proveedor']; // Nueva variable para el id_proveedor
+      // Obtén los datos del formulario
+      $nombreGasto = $_POST['nombre_gasto'];
+      $descripcion = $_POST['descripcion'];
+      $costo = $_POST['costo'];
+      $fechaExp = $_POST['fecha_exp']; // Nueva variable para la fecha de caducidad
+      $idProveedor = $_POST['proveedor']; // Nueva variable para el id_proveedor
 
-    // Genera la fecha actual
-    $fecha = date('Y-m-d');
+      // Genera la fecha actual
+      $fecha = date('Y-m-d');
 
-    // Inserta los datos en la base de datos
-    $sql = "INSERT INTO t_gastos (nombre_gasto, descripcion, fecha, fecha_exp, monto, id_proveedor) 
+      // Inserta los datos en la base de datos
+      $sql = "INSERT INTO t_gastos (nombre_gasto, descripcion, fecha, fecha_exp, monto, id_proveedor) 
             VALUES ('$nombreGasto', '$descripcion', '$fecha', '$fechaExp', $costo, $idProveedor)";
 
-    if ($conn->query($sql) === TRUE) {
+      if ($conn->query($sql) === TRUE) {
         $conn->close(); // Cierra la conexión
 
         // Redirige al usuario a la página de gastos
         print "<script>window.setTimeout(function() { window.location = '/RESIDENCIALES/pages/admin/pagos.php' }, 1000);</script>";
         exit(); // Asegura que el script se detenga aquí para evitar cualquier salida adicional
-    } else {
+      } else {
         echo "Error al registrar el gasto: " . $conn->error;
+      }
     }
-}
 
-?>
+    ?>
 
-<div class="container mt-4">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="container mt-4">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
         <?php
         include '../conexion.php'; // Incluye tu archivo de conexión
 
@@ -248,55 +262,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $resultado = $conn->query($sql);
 
         if ($resultado->num_rows > 0) {
-            while($fila = $resultado->fetch_assoc()) {
+          while ($fila = $resultado->fetch_assoc()) {
         ?>
 
-          <div class="col cards">
+            <div class="col cards">
 
-            <div class="card shadow">
-              <div class="card-body" data-bs-toggle="modal" data-bs-target="#modal_<?php echo $fila['Id_gasto']; ?>">
+              <div class="card shadow">
+                <div class="card-body" data-bs-toggle="modal" data-bs-target="#modal_<?php echo $fila['Id_gasto']; ?>">
 
-                <h5 class="card-title"><?php echo $fila['nombre_gasto']; ?></h5>
+                  <h5 class="card-title"><?php echo $fila['nombre_gasto']; ?></h5>
                   <p class="card-text"><?php echo $fila['descripcion']; ?></p>
                   <p class="card-text">Fecha de Registro: <?php echo $fila['fecha']; ?></p>
                   <p class="card-text">Fecha de Caducidad: <?php echo $fila['fecha_exp']; ?></p>
-                  <p class="card-text">Monto: <?php echo $fila['monto']; ?></p>  
+                  <p class="card-text">Monto: <?php echo $fila['monto']; ?></p>
                   <p class="card-text">Proveedor: <?php echo $fila['nombre_proveedor']; ?></p>
                 </div>
               </div>
-          </div>
+            </div>
 
         <?php
-            }
+          }
         } else {
-            echo "No se encontraron gastos.";
+          echo "No se encontraron gastos.";
         }
 
         $conn->close(); // Cierra la conexión
         ?>
+      </div>
     </div>
-</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script>
-    let arrow = document.querySelectorAll(".arrow");
-    for (var i = 0; i < arrow.length; i++) {
-      arrow[i].addEventListener("click", (e) => {
-        let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
-        arrowParent.classList.toggle("showMenu");
+    <script>
+      let arrow = document.querySelectorAll(".arrow");
+      for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e) => {
+          let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+          arrowParent.classList.toggle("showMenu");
+        });
+      }
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".bx-menu");
+      console.log(sidebarBtn);
+      sidebarBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
       });
-    }
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".bx-menu");
-    console.log(sidebarBtn);
-    sidebarBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("close");
-    });
+    </script>
 
-  </script>
-
-  <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

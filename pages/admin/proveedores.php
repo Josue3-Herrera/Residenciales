@@ -79,9 +79,21 @@ if ($rol != 2) {
         </ul>
       </li>
 
+      <!-- Mascotas -->
+      <li>
+        <a href="mascotas.php">
+          <i class='bx bxs-dog'></i>
+          <span class="link_name">Residentes</span>
+        </a>
+
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="mascotas.php">Mascotas 🐶</a></li>
+        </ul>
+      </li>
+
       <li style="background-color: #107FA3;">
         <a href="proveedores.php">
-        <i class='bx bx-group' ></i>
+          <i class='bx bx-group'></i>
           <span class="link_name">Proveedores</span>
         </a>
         <ul class="sub-menu blank">
@@ -135,85 +147,85 @@ if ($rol != 2) {
 
     <!-- Modal de formulario de nuevo proveedor-->
     <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+      <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
+          <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Nuevo proveedor</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
+          </div>
+          <div class="modal-body">
             <form action="proveedores.php" method="post" name="myform">
-            <div class="mb-3">
+              <div class="mb-3">
                 <label class="form-label">Nombre del proveedor 📝</label>
                 <input type="text" class="form-control" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre" required />
-            </div>
-            <div class="mb-3">
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Servicio ofrecido</label>
                 <input type="text" class="form-control" id="servicio_ofrecido" name="servicio_ofrecido" placeholder="Servicio ofrecido" required />
-            </div>
-            <div class="mb-3">
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Teléfono de contacto</label>
                 <input type="text" class="form-control" id="telefono_contacto" name="telefono_contacto" placeholder="Teléfono de contacto" required />
-            </div>
-            <div class="mb-3">
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Email de contacto</label>
                 <input type="email" class="form-control" id="email_contacto" name="email_contacto" placeholder="Email de contacto" required />
-            </div>
-            <div class="mb-3">
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Dirección</label>
                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required />
-            </div>
-            <div class="modal-footer d-block">
+              </div>
+              <div class="modal-footer d-block">
                 <button type="submit" class="btn btn-warning float-end">Registrar <span><i class='bx bxs-edit-alt'></i></span></button>
-            </div>
+              </div>
             </form>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </div>
 
     <?php
     // Verifica si se envió el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include '../conexion.php'; // Incluye tu archivo de conexión
+      include '../conexion.php'; // Incluye tu archivo de conexión
 
-    // Obtén los datos del formulario
-    $nombreProveedor = $_POST['nombre_proveedor'];
-    $servicioOfrecido = $_POST['servicio_ofrecido'];
-    $telefonoContacto = $_POST['telefono_contacto'];
-    $emailContacto = $_POST['email_contacto'];
-    $direccion = $_POST['direccion'];
-    $fecha = date('Y-m-d');
+      // Obtén los datos del formulario
+      $nombreProveedor = $_POST['nombre_proveedor'];
+      $servicioOfrecido = $_POST['servicio_ofrecido'];
+      $telefonoContacto = $_POST['telefono_contacto'];
+      $emailContacto = $_POST['email_contacto'];
+      $direccion = $_POST['direccion'];
+      $fecha = date('Y-m-d');
 
-    // Inserta los datos en la base de datos
-    $sql = "INSERT INTO t_proveedores (nombre, servicio_ofrecido, telefono_contacto, email_contacto, direccion, fecha_registro) 
+      // Inserta los datos en la base de datos
+      $sql = "INSERT INTO t_proveedores (nombre, servicio_ofrecido, telefono_contacto, email_contacto, direccion, fecha_registro) 
             VALUES ('$nombreProveedor', '$servicioOfrecido', '$telefonoContacto', '$emailContacto', '$direccion', '$fecha')";
 
-    if ($conn->query($sql) === TRUE) {
+      if ($conn->query($sql) === TRUE) {
         $conn->close(); // Cierra la conexión
         echo "El proveedor fue registrado correctamente";
         print "<script>window.setTimeout(function() { window.location = '/RESIDENCIALES/pages/admin/proveedores.php' }, 1000);</script>";
-    } else {
+      } else {
         echo "Error al registrar el proveedor: " . $conn->error;
-    }
+      }
     }
     ?>
 
     <div class="container mt-5">
-        <h1 class="mb-4">Lista de Proveedores</h1>
-        <div class="container mt-5">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Servicio Ofrecido</th>
-                        <th scope="col">Contacto</th>
-                        <th scope="col">Fecha Registro</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
+      <h1 class="mb-4">Lista de Proveedores</h1>
+      <div class="container mt-5">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Servicio Ofrecido</th>
+              <th scope="col">Contacto</th>
+              <th scope="col">Fecha Registro</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
             <?php
             include '../conexion.php';
 
@@ -221,74 +233,74 @@ if ($rol != 2) {
             $resultado = $conn->query($sql);
 
             if ($resultado->num_rows > 0) {
-                $i = 1;
-                    while ($fila = $resultado->fetch_assoc()) {
-                        $idProveedor = $fila['id_proveedor'];
-                        $nombreProveedor = $fila['nombre'];
-                        $servicioOfrecido = $fila['servicio_ofrecido'];
-                        $telefonoContacto = $fila['telefono_contacto'];
-                        $emailContacto = $fila['email_contacto'];
-                        $direccion = $fila['direccion'];
-                        $fechaRegistro = $fila['fecha_registro'];
+              $i = 1;
+              while ($fila = $resultado->fetch_assoc()) {
+                $idProveedor = $fila['id_proveedor'];
+                $nombreProveedor = $fila['nombre'];
+                $servicioOfrecido = $fila['servicio_ofrecido'];
+                $telefonoContacto = $fila['telefono_contacto'];
+                $emailContacto = $fila['email_contacto'];
+                $direccion = $fila['direccion'];
+                $fechaRegistro = $fila['fecha_registro'];
             ?>
                 <tr>
-                    <th scope="row"><?= $i ?></th>
-                    <td><?= $nombreProveedor ?></td>
-                    <td><?= $servicioOfrecido ?></td>
-                    <td><?= $telefonoContacto ?> (<?= $emailContacto ?>)</td>
-                    <td><?= $fechaRegistro ?></td>
-                    <td>
-                        <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editarProveedorModal<?= $idProveedor ?>">Editar</a>
-                        <a href="#" class="btn btn-danger">Eliminar</a>
-                    </td>
+                  <th scope="row"><?= $i ?></th>
+                  <td><?= $nombreProveedor ?></td>
+                  <td><?= $servicioOfrecido ?></td>
+                  <td><?= $telefonoContacto ?> (<?= $emailContacto ?>)</td>
+                  <td><?= $fechaRegistro ?></td>
+                  <td>
+                    <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editarProveedorModal<?= $idProveedor ?>">Editar</a>
+                    <a href="#" class="btn btn-danger">Eliminar</a>
+                  </td>
                 </tr>
 
                 <!-- Modal de edición para cada proveedor -->
                 <div class="modal fade" id="editarProveedorModal<?= $idProveedor ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Editar Proveedor</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="/RESIDENCIALES/pages/admin/editar_proveedor.php" method="post">
-                                            <input type="hidden" name="id_proveedor" value="<?= $idProveedor ?>">
-                                            <div class="mb-3">
-                                                <label class="form-label">Nombre de proveedor 📋</label>
-                                                <input type="text" class="form-control" name="nombre_proveedor" value="<?= $nombreProveedor ?>" required />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Servicio Ofrecido</label>
-                                                <input type="text" class="form-control" name="servicio_ofrecido" value="<?= $servicioOfrecido ?>" required />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Teléfono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto" value="<?= $telefonoContacto ?>" required />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Email de Contacto</label>
-                                                <input type="email" class="form-control" name="email_contacto" value="<?= $emailContacto ?>" required />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Dirección</label>
-                                                <input type="text" class="form-control" name="direccion" value="<?= $direccion ?>" required />
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                <?php
-                        $i++;
-                    }
-                } else {
-                    echo "<tr><td colspan='6'>No hay proveedores registrados</td></tr>";
-                }
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Proveedor</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="/RESIDENCIALES/pages/admin/editar_proveedor.php" method="post">
+                          <input type="hidden" name="id_proveedor" value="<?= $idProveedor ?>">
+                          <div class="mb-3">
+                            <label class="form-label">Nombre de proveedor 📋</label>
+                            <input type="text" class="form-control" name="nombre_proveedor" value="<?= $nombreProveedor ?>" required />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Servicio Ofrecido</label>
+                            <input type="text" class="form-control" name="servicio_ofrecido" value="<?= $servicioOfrecido ?>" required />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Teléfono de Contacto</label>
+                            <input type="text" class="form-control" name="telefono_contacto" value="<?= $telefonoContacto ?>" required />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Email de Contacto</label>
+                            <input type="email" class="form-control" name="email_contacto" value="<?= $emailContacto ?>" required />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" class="form-control" name="direccion" value="<?= $direccion ?>" required />
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            <?php
+                $i++;
+              }
+            } else {
+              echo "<tr><td colspan='6'>No hay proveedores registrados</td></tr>";
+            }
 
             $conn->close();
             ?>

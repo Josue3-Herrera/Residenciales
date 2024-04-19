@@ -79,9 +79,21 @@ if ($rol != 2) {
         </ul>
       </li>
 
+      <!-- Mascotas -->
+      <li>
+        <a href="mascotas.php">
+          <i class='bx bxs-dog'></i>
+          <span class="link_name">Residentes</span>
+        </a>
+
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="mascotas.php">Mascotas 🐶</a></li>
+        </ul>
+      </li>
+
       <li>
         <a href="proveedores.php">
-        <i class='bx bx-group' ></i>
+          <i class='bx bx-group'></i>
           <span class="link_name">Proveedores</span>
         </a>
         <ul class="sub-menu blank">
