@@ -249,7 +249,7 @@ if ($rol != 2) {
             <table class="table mt-4 table-hover ">
                 <thead class="table-dark">
                     <tr>
-                        <th>Usuario</th>
+                        <th>Dirección</th>
                         <th>Nombre</th>
                         <th>Tipo</th>
                         <th>Raza</th>
@@ -261,19 +261,18 @@ if ($rol != 2) {
                 </thead>
                 <tbody>
                     <?php
-                    // Incluir el archivo de conexión
                     include 'conexion.php';
 
-                    // Consulta para obtener las mascotas con información del usuario asociado
-                    $sql_mascotas = "SELECT t_mascotas.*, t_usuarios.usuario 
-                             FROM t_mascotas 
-                             INNER JOIN t_usuarios ON t_mascotas.id_usuario = t_usuarios.Id_usuario";
+                    // Consulta para obtener las mascotas con información de la dirección del usuario asociado
+                    $sql_mascotas = "SELECT t_mascotas.*, t_usuarios.direccion 
+                 FROM t_mascotas 
+                 INNER JOIN t_usuarios ON t_mascotas.id_usuario = t_usuarios.Id_usuario";
                     $result_mascotas = $conn->query($sql_mascotas);
 
                     if ($result_mascotas->num_rows > 0) {
                         while ($row_mascota = $result_mascotas->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $row_mascota['usuario'] . "</td>";
+                            echo "<td>" . $row_mascota['direccion'] . "</td>"; // Cambiado de 'usuario' a 'direccion'
                             echo "<td>" . $row_mascota['nombre'] . "</td>";
                             echo "<td>" . $row_mascota['tipo'] . "</td>";
                             echo "<td>" . $row_mascota['raza'] . "</td>";
@@ -287,6 +286,7 @@ if ($rol != 2) {
                         echo "<tr><td colspan='7'>No hay mascotas registradas</td></tr>";
                     }
                     ?>
+
                 </tbody>
             </table>
         </article>
