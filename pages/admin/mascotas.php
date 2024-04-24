@@ -30,38 +30,6 @@ if ($rol != 2) {
 </head>
 
 <body>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let inputBusqueda = document.getElementById('busqueda');
-        let tablaMascotas = document.getElementById('tablaMascotas');
-        let rows = tablaMascotas.getElementsByTagName('tr');
-
-        inputBusqueda.addEventListener('input', function() {
-            let filtro = inputBusqueda.value.toLowerCase();
-
-            for (let i = 0; i < rows.length; i++) {
-                let cells = rows[i].getElementsByTagName('td');
-                let mostrar = false;
-
-                for (let j = 0; j < cells.length; j++) {
-                    let cellValue = cells[j].innerText.toLowerCase();
-                    if (cellValue.indexOf(filtro) > -1) {
-                        mostrar = true;
-                        break;
-                    }
-                }
-
-                if (mostrar) {
-                    rows[i].style.display = '';
-                } else {
-                    rows[i].style.display = 'none';
-                }
-            }
-        });
-    });
-</script>
-
-
     <div class="sidebar close">
 
         <!-- Logo -->
@@ -342,6 +310,37 @@ if ($rol != 2) {
         console.log(sidebarBtn);
         sidebarBtn.addEventListener("click", () => {
             sidebar.classList.toggle("close");
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let inputBusqueda = document.getElementById('busqueda');
+            let tablaMascotas = document.getElementById('tablaMascotas');
+            let rows = tablaMascotas.getElementsByTagName('tr');
+
+            inputBusqueda.addEventListener('input', function() {
+                let filtro = inputBusqueda.value.toLowerCase();
+
+                for (let i = 0; i < rows.length; i++) {
+                    let cells = rows[i].getElementsByTagName('td');
+                    let mostrar = false;
+
+                    for (let j = 0; j < cells.length; j++) {
+                        let cellValue = cells[j].innerText.toLowerCase();
+                        if (cellValue.indexOf(filtro) > -1) {
+                            mostrar = true;
+                            break;
+                        }
+                    }
+
+                    if (mostrar) {
+                        rows[i].style.display = '';
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            });
         });
     </script>
 
