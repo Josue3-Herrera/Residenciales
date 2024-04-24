@@ -30,6 +30,37 @@ if ($rol != 2) {
 </head>
 
 <body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let inputBusqueda = document.getElementById('busqueda');
+        let tablaMascotas = document.getElementById('tablaMascotas');
+        let rows = tablaMascotas.getElementsByTagName('tr');
+
+        inputBusqueda.addEventListener('input', function() {
+            let filtro = inputBusqueda.value.toLowerCase();
+
+            for (let i = 0; i < rows.length; i++) {
+                let cells = rows[i].getElementsByTagName('td');
+                let mostrar = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    let cellValue = cells[j].innerText.toLowerCase();
+                    if (cellValue.indexOf(filtro) > -1) {
+                        mostrar = true;
+                        break;
+                    }
+                }
+
+                if (mostrar) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        });
+    });
+</script>
+
 
     <div class="sidebar close">
 
@@ -246,7 +277,8 @@ if ($rol != 2) {
 
         <article class="container mt-5">
             <h2 class="mt-5">Tabla de Mascotas</h2>
-            <table class="table mt-4 table-hover ">
+            <input type="text" class="form-control mt-3" id="busqueda" placeholder="Buscar mascota...">
+            <table id="tablaMascotas" class="table mt-4 table-hover">
                 <thead class="table-dark">
                     <tr>
                         <th>Dirección</th>
@@ -265,8 +297,8 @@ if ($rol != 2) {
 
                     // Consulta para obtener las mascotas con información de la dirección del usuario asociado
                     $sql_mascotas = "SELECT t_mascotas.*, t_usuarios.direccion 
-                 FROM t_mascotas 
-                 INNER JOIN t_usuarios ON t_mascotas.id_usuario = t_usuarios.Id_usuario";
+                        FROM t_mascotas 
+                        INNER JOIN t_usuarios ON t_mascotas.id_usuario = t_usuarios.Id_usuario";
                     $result_mascotas = $conn->query($sql_mascotas);
 
                     if ($result_mascotas->num_rows > 0) {
